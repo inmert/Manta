@@ -1,6 +1,6 @@
 # 🛸 Manta
 
-![Swift](https://img.shields.io/badge/Swift-5.0-orange?logo=swift)
+![Swift](https://img.shields.io/badge/Swift-6.0-orange?logo=swift)
 ![JSON](https://img.shields.io/badge/JSON-Data-blue?logo=json)
 
 Manta is an iOS app designed for seamless drone-based delivery. Built with Swift, it focuses on minimal UI and performance-driven features for real-time package tracking and control.
