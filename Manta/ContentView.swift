@@ -10,31 +10,62 @@ import MapKit
 
 struct ContentView: View {
     @State private var cameraPosition = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 39.1031, longitude: -84.5120), span: MKCoordinateSpan(latitudeDelta: 0.025, longitudeDelta: 0.025)))
+    @State private var showSettingsSheet = false
+    @State private var searchText = ""
 
     var body: some View {
         TabView {
+            
+            
             // First tab: your existing content replaced with ZStack with top-right buttons
-            ZStack(alignment: .topTrailing) {
-                // Top-right buttons
-                HStack(spacing: 16) {
-                    Button(action: { /* Button 1 action */ }) {
-                        Image(systemName: "bell")
-                            .font(.system(size: 22))
-                            .foregroundColor(.primary)
-                            .frame(width: 44, height: 44)
-                            .background(RoundedRectangle(cornerRadius: 14).fill(Color(.systemBackground)).shadow(radius: 4))
+            ZStack(alignment: .top) {
+                
+                VStack(alignment: .leading, spacing: 10) {
+                    HStack {
+                        HStack(spacing: 12) {
+                            Image("Manta")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 60, height: 60)
+                                .clipped()
+                        }
+                        .padding(.leading, 32)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .zIndex(1)
+                        Spacer()
+                        // Bell and settings buttons (top right)
+                        HStack(spacing: 16) {
+                            Button(action: { /* Button 1 action */ }) {
+                                Image(systemName: "bell")
+                                    .font(.system(size: 22))
+                                    .foregroundColor(.primary)
+                                    .frame(width: 44, height: 44)
+                                    .background(RoundedRectangle(cornerRadius: 14).fill(Color(.systemBackground)).shadow(radius: 4))
+                            }
+                            Button(action: { showSettingsSheet = true }) {
+                                Image(systemName: "gearshape")
+                                    .font(.system(size: 22))
+                                    .foregroundColor(.primary)
+                                    .frame(width: 44, height: 44)
+                                    .background(RoundedRectangle(cornerRadius: 14).fill(Color(.systemBackground)).shadow(radius: 4))
+                            }
+                        }
+                        .padding(.trailing, 32)
                     }
-                    Button(action: { /* Button 2 action */ }) {
-                        Image(systemName: "gearshape")
-                            .font(.system(size: 22))
-                            .foregroundColor(.primary)
-                            .frame(width: 44, height: 44)
-                            .background(RoundedRectangle(cornerRadius: 14).fill(Color(.systemBackground)).shadow(radius: 4))
-                    }
-                }
-                .padding(.top, 8)
-                .padding(.trailing, 32)
+                    .padding(.top, 10)
 
+                    HStack {
+                        Image(systemName: "magnifyingglass")
+                            .foregroundColor(.secondary)
+                        TextField("Search for address, kiosk, or items...", text: $searchText)
+                            .textFieldStyle(PlainTextFieldStyle())
+                    }
+                    .padding(12)
+                    .background(RoundedRectangle(cornerRadius: 12).fill(Color(.systemGray6)))
+                    .padding(.horizontal, 32)
+                    .padding(.top,20)
+                }
+                
                 // Main content
                 VStack(spacing: 20) {
                     // Top rectangular card with map and overlayed text
@@ -61,7 +92,7 @@ struct ContentView: View {
                         .padding(.top, 18)
                         .padding(.leading, 18)
                     }
-                    .frame(maxWidth: .infinity, maxHeight: 280)
+                    .frame(maxWidth: .infinity, maxHeight: 400)
                     .padding(.horizontal, 24)
 
                     // Bottom row of two square cards
@@ -69,7 +100,7 @@ struct ContentView: View {
                         // First Card
                         ZStack {
                             RoundedRectangle(cornerRadius: 20)
-                                .fill(Color(.black.opacity(0.8)))
+                                .fill(Color(.green.opacity(0.8)))
                                 .shadow(radius: 20)
                             Image("Pickup")
                                 .resizable()
@@ -97,10 +128,11 @@ struct ContentView: View {
                         }
                         .frame(maxWidth: .infinity)
                         .aspectRatio(1, contentMode: .fit)
+                        
                         // Second Card
                         ZStack {
                             RoundedRectangle(cornerRadius: 20)
-                                .fill(Color(.black.opacity(0.5)))
+                                .fill(Color(.blue.opacity(0.5)))
                                 .shadow(radius: 20)
                             Image("Dropoff")
                                 .resizable()
@@ -131,8 +163,8 @@ struct ContentView: View {
                     }
                     .padding(.horizontal, 24)
                 }
+                .padding(.top, 150)
                 .padding(.vertical, 30)
-                .padding(.top, 220)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             }
             .tabItem {
@@ -188,4 +220,10 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+}
+
+struct Previews_ContentView_LibraryContent: LibraryContentProvider {
+    var views: [LibraryItem] {
+        LibraryItem(/*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/)
+    }
 }
