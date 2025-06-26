@@ -7,6 +7,7 @@
 
 import SwiftUI
 import MapKit
+import SceneKit
 
 struct ContentView: View {
     @State private var cameraPosition = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 39.1031, longitude: -84.5120), span: MKCoordinateSpan(latitudeDelta: 0.025, longitudeDelta: 0.025)))
@@ -171,20 +172,26 @@ struct ContentView: View {
                 Image(systemName: "house")
                 Text("Home")
             }
+            
+            // FBX drone model viewer - interactive
             // Second tab
-            VStack {
-                Image(systemName: "person.crop.circle")
-                    .font(.system(size: 64))
-                    .padding(.top, 120)
-                Text("Profile")
-                    .font(.largeTitle)
-                    .padding()
+            VStack(spacing: 18) {
+                Text("Manta Prototype 2")
+                    .font(.title2)
+                    .bold()
+                    .padding(.top, 24)
+                Drone3DView()
+                    .frame(height: 600)
+                    .cornerRadius(18)
+                    .padding(.horizontal, 24)
+                    .accessibilityLabel("Interactive 3D drone model")
                 Spacer()
             }
             .tabItem {
                 Image(systemName: "paperplane.fill")
                 Text("Drones")
             }
+            
             // Third tab
             VStack {
                 Image(systemName: "person.crop.circle")
@@ -217,6 +224,8 @@ struct ContentView: View {
         }
     }
 }
+
+
 
 #Preview {
     ContentView()
